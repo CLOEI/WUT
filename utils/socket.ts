@@ -48,9 +48,20 @@ class Socket {
     sock.ev.on('creds.update', saveCreds)
   }
 
-  async getConUserData(name: string) {
+  async getProfileUrl(name: string, id: string) {
     const { sock } = Socket.clients[name]
-    return sock.user;
+    return await sock.profilePictureUrl(jidNormalizedUser(id))
+  }
+
+  async checkOnWhatsApp(name: string, numbers: string[]) {
+    const { sock } = Socket.clients[name]
+
+    return await Promise.all(numbers.map((number) => {
+      return new Promise((resolve) => {
+        sock.onWhatsApp(number)
+          .then(res => res[0] ? resolve({ number, exist: true }) : resolve({ number, exist: false }))
+      })
+    }))
   }
 }
 

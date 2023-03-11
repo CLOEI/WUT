@@ -7,6 +7,7 @@ import Layout from "./routes/app"
 import ClientLayout from "./routes/app/client/layout"
 import Client from "./routes/app/client/client"
 import ClientIndex from "./routes/app/client"
+import Filter from "./routes/app/filter"
 
 import { store } from "../redux/store"
 
@@ -35,6 +36,10 @@ const router = createHashRouter([
             element: <Client/>
           }
         ]
+      },
+      {
+        path: "filter",
+        element: <Filter/>,
       }
     ]
   }

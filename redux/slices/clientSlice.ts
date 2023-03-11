@@ -2,7 +2,10 @@ import { Contact } from "@adiwajshing/baileys";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export type ClientState = {
-  [x: string]: Client
+  defaultClient: string;
+  clients: {
+    [x: string]: Client
+  }
 };
 
 export type Client = {
@@ -12,36 +15,41 @@ export type Client = {
   data?: undefined | Contact;
 }
 
-const initialState: ClientState = {};
+const initialState: ClientState = {
+  defaultClient: "",
+  clients: {}
+};
 
 export const clientSlice = createSlice({
   name: "client",
   initialState,
   reducers: {
     newClient: (state, action: PayloadAction<Client>) => {
-      api.createClient(action.payload.name)
-      state[action.payload.name] = {
+      state.clients[action.payload.name] = {
         name: action.payload.name,
-        conStatus: "closed",
+        conStatus: "close",
         qr: "",
         data: undefined,
       };
     },
     upCon: (state, action: PayloadAction<Client>) => {
-      if (action.payload.name in state) {
+      if (action.payload.name in state.clients) {
         if(action.payload.conStatus){
-          state[action.payload.name].conStatus = action.payload.conStatus;
+          state.clients[action.payload.name].conStatus = action.payload.conStatus;
         } 
 
-        state[action.payload.name] = {
-          ...state[action.payload.name],
+        state.clients[action.payload.name] = {
+          ...state.clients[action.payload.name],
           qr: action.payload.qr,
           data: action.payload.data || undefined
         }
       }
+    },
+    setDefault: (state, action: PayloadAction<string>) => {
+      state.defaultClient = action.payload
     }
   }
 })
 
-export const { newClient, upCon } = clientSlice.actions;
+export const { newClient, upCon, setDefault } = clientSlice.actions;
 export default clientSlice.reducer;

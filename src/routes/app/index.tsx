@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { AiOutlineLeft } from 'react-icons/ai'
 import { useDispatch } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom'

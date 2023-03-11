@@ -8,29 +8,30 @@ import { RootState } from "@/redux/store"
 import { newClient } from '@/redux/slices/clientSlice';
 
 function Layout() { 
-  const clients = useSelector((state: RootState) => state.client)
+  const clients = useSelector((state: RootState) => state.client.clients)
   const dispatch = useDispatch();
 
   const addClient = async () => {
-    dispatch(newClient({ name: nanoid() }))
+    const name = nanoid();
+
+    dispatch(newClient({ name }))
+    api.createClient(name)
   }
 
   return (
-    <div className='h-full overflow-hidden'>
-      <div className='grid grid-cols-[250px_1fr] h-full'>
-        <div className='h-full bg-secondary'>
-          <div className='py-2 h-[calc(100vh-104px)] overflow-y-auto'>
-            {Object.values(clients).map((client, i) => {
-              return <ClientButton name={client.name} key={i}/>
-            })}
-          </div>
-          <button onClick={addClient} className='bg-main w-full flex justify-center items-center py-2 whitespace-nowrap space-x-1 active:scale-90'>
-            <AiOutlinePlus/>
-            <span>New client</span>
-          </button>
+    <div className='grid grid-cols-[250px_1fr] h-full'>
+      <div className='h-full bg-secondary'>
+        <div className='py-2 h-[calc(100vh-104px)] overflow-y-auto'>
+          {Object.values(clients).map((client, i) => {
+            return <ClientButton name={client.name} key={i}/>
+          })}
         </div>
-        <Outlet/>
+        <button onClick={addClient} className='bg-main w-full flex justify-center items-center py-2 whitespace-nowrap space-x-1 active:scale-90'>
+          <AiOutlinePlus/>
+          <span>New client</span>
+        </button>
       </div>
+      <Outlet/>
     </div>
   )
 }
