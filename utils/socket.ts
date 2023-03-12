@@ -1,5 +1,6 @@
 import makeWASocket, { useMultiFileAuthState, DisconnectReason, jidNormalizedUser } from "@adiwajshing/baileys";
-import { Boom } from '@hapi/boom'
+import { Boom } from '@hapi/boom/lib'
+import { pino } from 'pino'
 
 type Clients = {
   [x: string] : {
@@ -17,10 +18,14 @@ class Socket {
   }
 
   async newClient(name: string) {
+    const logger = pino()
+    logger.level = "silent"
+
     const { state, saveCreds } = await useMultiFileAuthState(`sessions/${name}`)
     const sock = makeWASocket({
       auth: state,
-      browser: ["WUT", "Chrome", "1.0.0"]
+      browser: ["WUT", "Chrome", "1.0.0"],
+      logger
     });
 
     sock.ev.on("connection.update", (update) => {

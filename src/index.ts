@@ -15,6 +15,8 @@ const createWindow = (): void => {
   const mainWindow = new BrowserWindow({
     height: 500,
     width: 800,
+    minHeight: 500,
+    minWidth: 800,
     autoHideMenuBar: true,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
@@ -51,7 +53,9 @@ const createWindow = (): void => {
   
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-  mainWindow.webContents.openDevTools();
+  if (process.env.NODE_ENV === 'development') {
+    mainWindow.webContents.openDevTools();
+  }
 };
 
 // This method will be called when Electron has finished
