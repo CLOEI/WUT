@@ -32,6 +32,12 @@ export const clientSlice = createSlice({
         data: undefined,
       };
     },
+    remClient : (state, action: PayloadAction<string>) => {
+      delete state.clients[action.payload];
+      if (state.defaultClient === action.payload) {
+        state.defaultClient = "";
+      }
+    },
     upCon: (state, action: PayloadAction<Client>) => {
       if (action.payload.name in state.clients) {
         if(action.payload.conStatus){
@@ -51,5 +57,5 @@ export const clientSlice = createSlice({
   }
 })
 
-export const { newClient, upCon, setDefault } = clientSlice.actions;
+export const { newClient, upCon, setDefault, remClient } = clientSlice.actions;
 export default clientSlice.reducer;

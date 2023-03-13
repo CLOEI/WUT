@@ -1,4 +1,6 @@
 import makeWASocket, { useMultiFileAuthState, DisconnectReason, jidNormalizedUser } from "@adiwajshing/baileys";
+import fs from "fs/promises";
+import path from "path";
 import { Boom } from '@hapi/boom/lib'
 import { pino } from 'pino'
 
@@ -28,20 +30,23 @@ class Socket {
       logger
     });
 
-    sock.ev.on("connection.update", (update) => {
+    sock.ev.on("connection.update", async (update) => {
       const { connection, lastDisconnect } = update
 
       this.wc.send("connection", {
         name,
         qr: update.qr,
-        conStatus: update.connection,
+        conStatus: connection,
         data: sock.user
       })
 
       if(connection === 'close') {
-          const shouldReconnect = (lastDisconnect.error as Boom)?.output?.statusCode !== DisconnectReason.loggedOut
-          if(shouldReconnect) {
-            this.newClient(name)
+          const status = (lastDisconnect.error as Boom)?.output?.statusCode;
+          if(status !== DisconnectReason.loggedOut) {
+            this.newClient(name) 
+          } else {
+            this.wc.send("client-removed", name)
+            await fs.rm(path.join("sessions", name), { recursive: true, force: true })
           }
       } else if(connection === 'open') {
         Socket.clients[name] = {
@@ -67,6 +72,10 @@ class Socket {
           .then(res => res[0] ? resolve({ number, exist: true }) : resolve({ number, exist: false }))
       })
     }))
+  }
+  async logout(name: string) {
+    const { sock } = Socket.clients[name]
+    return await sock.logout()
   }
 }
 

@@ -1,8 +1,8 @@
 {
   "name": "wut",
-  "productName": "wut",
+  "productName": "WUT",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "WhatsApp Utilities built with Electron",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -38,6 +38,7 @@
     "node-loader": "^2.0.0",
     "postcss-loader": "^7.0.2",
     "style-loader": "^3.0.0",
+    "tailwind-scrollbar": "^2.1.0",
     "tailwindcss": "^3.2.7",
     "ts-loader": "^9.2.2",
     "ts-node": "^10.0.0",
@@ -45,25 +46,18 @@
   },
   "dependencies": {
     "@adiwajshing/baileys": "github:adiwajshing/baileys",
-    "@adiwajshing/keyed-db": "^0.2.4",
     "@hapi/boom": "^10.0.1",
     "@reduxjs/toolkit": "^1.9.3",
-    "bufferutil": "^4.0.7",
     "electron-squirrel-startup": "^1.0.0",
     "framer-motion": "^10.2.3",
-    "jimp": "^0.16.13",
     "link-preview-js": "^3.0.4",
     "nanoid": "^4.0.1",
     "pino": "^8.11.0",
-    "pino-pretty": "^9.4.0",
-    "qrcode-terminal": "^0.12.0",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-redux": "^8.0.5",
-    "react-router-dom": "^6.9.0",
-    "sharp": "^0.30.7",
-    "utf-8-validate": "^5.0.10"
+    "react-router-dom": "^6.9.0"
   }
 }

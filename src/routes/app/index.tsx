@@ -1,17 +1,26 @@
 import { useEffect } from 'react'
 import { AiOutlineLeft } from 'react-icons/ai'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom'
 
-import { Client, upCon } from "@/redux/slices/clientSlice"
+import { Client, upCon, setDefault, remClient } from "@/redux/slices/clientSlice"
+import { RootState } from '@/redux/store';
 
 function Index() {
+  const defaultClient = useSelector((state: RootState) => state.client.defaultClient)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     api.onConnection((data: Client) => {
+      if(data.data && !defaultClient) {
+        dispatch(setDefault(data.name))
+      }
       dispatch(upCon(data))
+    })
+
+    api.onRemoved((name: string) => {
+      dispatch(remClient(name))
     })
   }, [])
 

@@ -17,7 +17,7 @@ function Main() {
         <button onClick={null} className='bg-secondary p-4 rounded-md opacity-50' disabled>
           <BiGroup />
         </button>
-        <button onClick={gotoFilter} className='bg-secondary p-4 rounded-md'>
+        <button onClick={gotoFilter} className='bg-secondary p-4 rounded-md active:scale-90'>
           <AiOutlineFilter />
         </button>
       </div>

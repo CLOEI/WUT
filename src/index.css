@@ -6,3 +6,9 @@ body {
   background-color: #16161a;
   color: #fffffe;
 }
+
+@layer components {
+  .cus-scrollbar {
+    @apply scrollbar-thumb-main scrollbar-thin
+  }
+}
