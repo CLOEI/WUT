@@ -11,8 +11,9 @@ import { rendererConfig } from './webpack.renderer.config';
 const config: ForgeConfig = {
   packagerConfig: {
     ignore: [
-      new RegExp('/(sharp|jimp|qrcode-terminal|utf-8-validate|pino-pretty|bufferutil|@adiwajshing/keyed-db)/')
-    ]
+      new RegExp('/(jimp|qrcode-terminal|utf-8-validate|pino-pretty|bufferutil|@adiwajshing/keyed-db)/')
+    ],
+    asar: true
   },
   rebuildConfig: {},
   makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],

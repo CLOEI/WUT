@@ -8,6 +8,9 @@ import ClientLayout from "./routes/app/client/layout"
 import Client from "./routes/app/client/client"
 import ClientIndex from "./routes/app/client"
 import Filter from "./routes/app/filter"
+import BroadcastLayout from "./routes/app/broadcast/layout"
+import Broadcast from "./routes/app/broadcast/client"
+import BroadcastIndex from "./routes/app/broadcast"
 
 import { store } from "../redux/store"
 
@@ -40,6 +43,17 @@ const router = createHashRouter([
       {
         path: "filter",
         element: <Filter/>,
+      },
+      {
+        path: "broadcast",
+        element: <BroadcastLayout/>,
+        children: [
+          { index: true, element: <BroadcastIndex/> },
+          {
+            path: ":id",
+            element: <Broadcast/>
+          }
+        ]
       }
     ]
   }

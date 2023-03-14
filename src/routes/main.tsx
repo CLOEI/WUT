@@ -1,5 +1,6 @@
 import { AiOutlineWhatsApp, AiOutlineFilter } from "react-icons/ai"
 import { BiGroup } from "react-icons/bi"
+import { BsBroadcast } from "react-icons/bs"
 import { useNavigate } from 'react-router-dom'
 
 function Main() {
@@ -7,18 +8,22 @@ function Main() {
 
   const gotoclient = () => navigate("/app/client")
   const gotoFilter = () => navigate("/app/filter");
+  const gotoBC = () => navigate("/app/broadcast");
 
   return (
     <div className='flex justify-center items-center min-h-screen'>
       <div className='space-x-2'>
-        <button onClick={gotoclient} className='bg-secondary p-4 rounded-md active:scale-90'>
+        <button onClick={gotoclient} className='menu-button'>
           <AiOutlineWhatsApp />
         </button>
-        <button onClick={null} className='bg-secondary p-4 rounded-md opacity-50' disabled>
+        <button onClick={null} className='menu-button' disabled>
           <BiGroup />
         </button>
-        <button onClick={gotoFilter} className='bg-secondary p-4 rounded-md active:scale-90'>
+        <button onClick={gotoFilter} className='menu-button'>
           <AiOutlineFilter />
+        </button>
+        <button onClick={gotoBC} className='menu-button'>
+          <BsBroadcast />
         </button>
       </div>
     </div>

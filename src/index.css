@@ -11,4 +11,7 @@ body {
   .cus-scrollbar {
     @apply scrollbar-thumb-main scrollbar-thin
   }
+  .menu-button {
+    @apply bg-secondary p-4 rounded-md enabled:active:scale-90 disabled:opacity-50
+  }
 }
