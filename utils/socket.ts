@@ -20,14 +20,11 @@ class Socket {
   }
 
   async newClient(name: string) {
-    const logger = pino()
-    logger.level = "silent"
-
     const { state, saveCreds } = await useMultiFileAuthState(`sessions/${name}`)
     const sock = makeWASocket({
       auth: state,
       browser: ["WUT", "Chrome", "1.0.0"],
-      logger
+      logger: pino({ level: "silent" })
     });
 
     sock.ev.on("connection.update", async (update) => {
@@ -68,8 +65,10 @@ class Socket {
 
     return await Promise.all(numbers.map((number) => {
       return new Promise((resolve) => {
-        sock.onWhatsApp(number)
-          .then(res => res[0] ? resolve({ number, exist: true }) : resolve({ number, exist: false }))
+        sock.onWhatsApp(number.replace(/\D/g, ""))
+          .then(res => {
+            const jid = res[0]?.jid.split("@")[0] || number
+            return res[0] ? resolve({ number: jid, exist: true }) : resolve({ number: jid, exist: false })          })
       })
     }))
   }

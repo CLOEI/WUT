@@ -10,7 +10,7 @@ function Layout() {
   const navigate = useNavigate();
 
   return (
-    <div className='grid grid-cols-[250px_1fr] h-full'>
+    <div className='grid grid-cols-[250px_1fr] h-[calc(100vh-56px)]'>
       <div className='h-full bg-secondary'>
         {Object.values(clients).map((client, i) => {
             return <ClientButton name={client.name} onClick={() => navigate(`/app/broadcast/${client.name}`)} key={i}/>

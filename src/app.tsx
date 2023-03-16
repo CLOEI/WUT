@@ -13,7 +13,19 @@ import Broadcast from "./routes/app/broadcast/client"
 import BroadcastIndex from "./routes/app/broadcast"
 
 import { store } from "../redux/store"
+import { Client as TClient, remClient, setDefault, upCon } from "@/redux/slices/clientSlice";
 
+
+api.onConnection((data: TClient) => {
+  if(data.data && !store.getState().client.defaultClient) {
+    store.dispatch(setDefault(data.name))
+  }
+  store.dispatch(upCon(data))
+})
+
+api.onRemoved((name: string) => {
+  store.dispatch(remClient(name))
+})
 
 store.subscribe(() => {
   const state = store.getState()
