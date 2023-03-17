@@ -56,6 +56,9 @@ const createWindow = (): void => {
     const checked = await sock.checkOnWhatsApp(name, numbers)
     return checked;
   })
+  ipcMain.handle("send-message", async (_, name, message, to, media) => {
+    await sock.sendMessage(name, message, to, media)
+  })
   
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 

@@ -24,6 +24,7 @@
     "@electron-forge/maker-squirrel": "^6.0.5",
     "@electron-forge/maker-zip": "^6.0.5",
     "@electron-forge/plugin-webpack": "^6.0.5",
+    "@types/mime-types": "^2.1.1",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
@@ -51,14 +52,16 @@
     "electron-squirrel-startup": "^1.0.0",
     "framer-motion": "^10.2.3",
     "link-preview-js": "^3.0.4",
+    "mime-types": "^2.1.35",
     "nanoid": "^4.0.1",
     "pino": "^8.11.0",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.43.6",
     "react-icons": "^4.8.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
-    "sharp": "^0.31.3"
+    "sharp": "^0.30.5"
   }
 }
