@@ -11,6 +11,7 @@ import Filter from "./routes/app/filter"
 import BroadcastLayout from "./routes/app/broadcast/layout"
 import Broadcast from "./routes/app/broadcast/client"
 import BroadcastIndex from "./routes/app/broadcast"
+import Settings from "./routes/app/settings"
 
 import { store } from "../redux/store"
 import { Client as TClient, remClient, setDefault, upCon } from "@/redux/slices/clientSlice";
@@ -66,7 +67,11 @@ const router = createHashRouter([
             element: <Broadcast/>
           }
         ]
-      }
+      },
+      {
+        path: "settings",
+        element: <Settings/>,
+      },
     ]
   }
 ])

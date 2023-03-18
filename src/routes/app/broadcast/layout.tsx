@@ -13,7 +13,7 @@ function Layout() {
     <div className='grid grid-cols-[250px_1fr] h-[calc(100vh-56px)]'>
       <div className='h-full bg-secondary'>
         {Object.values(clients).map((client, i) => {
-            return <ClientButton name={client.name} onClick={() => navigate(`/app/broadcast/${client.name}`)} key={i}/>
+          return <ClientButton name={client.name} onClick={() => navigate(`/app/broadcast/${client.name}`)} key={i}/>
         })}
       </div>
       <Outlet/>
