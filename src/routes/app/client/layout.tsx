@@ -9,7 +9,7 @@ import { newClient } from '@/redux/slices/clientSlice';
 
 function Layout() { 
   const clients = useSelector((state: RootState) => state.client.clients)
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const dispatch = useDispatch();
 
   const addClient = async () => {
@@ -24,7 +24,8 @@ function Layout() {
       <div className='h-full bg-secondary'>
         <div className='py-2 h-[calc(100vh-104px)] overflow-y-auto cus-scrollbar'>
           {Object.values(clients).map((client, i) => {
-            return <ClientButton name={client.name} onClick={() => navigate(`/app/client/${client.name}`)} key={i}/>
+            const onClick = (path: string) => !(path === `/app/client/${client.name}`) && navigate(`/app/client/${client.name}`)
+            return <ClientButton name={client.name} onClick={onClick} key={i}/>
           })}
         </div>
         <button onClick={addClient} className='bg-main w-full flex justify-center items-center py-2 whitespace-nowrap space-x-1 active:scale-90'>

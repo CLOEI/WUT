@@ -4,6 +4,7 @@ import path from "path";
 import { lookup } from "mime-types"
 import { Boom } from '@hapi/boom/lib'
 import { pino } from 'pino'
+import { app } from "electron"
 
 type Clients = {
   [x: string] : ReturnType<typeof makeWASocket>;
@@ -21,7 +22,7 @@ class Socket {
   }
 
   async newClient(name: string) {
-    const { state, saveCreds } = await useMultiFileAuthState(`sessions/${name}`)
+    const { state, saveCreds } = await useMultiFileAuthState(path.join(app.getPath("userData"), "sessions", name))
     const sock = makeWASocket({
       auth: state,
       browser: ["WUT", "Chrome", "1.0.0"],
@@ -44,7 +45,7 @@ class Socket {
             this.newClient(name) 
           } else {
             this.wc.send("client-removed", name)
-            await fs.rm(path.join("sessions", name), { recursive: true, force: true })
+            await fs.rm(path.join(app.getPath("userData"), "sessions", name), { recursive: true, force: true })
           }
       } else if(connection === 'open') {
         Socket.clients[name] = sock

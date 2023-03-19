@@ -1,15 +1,19 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export type SettingsState = {
-  delay: number;
+  minDelay: number;
+  maxDelay: number;
   sleepAfter: number;
   enableSleep: boolean;
+  enableBTG: boolean;
 };
 
 const initialState: SettingsState = {
-  delay: 0,
+  minDelay: 0,
+  maxDelay: 0,
   sleepAfter: 0,
-  enableSleep: false
+  enableSleep: false,
+  enableBTG: false,
 };
 
 export const settingsSlice = createSlice({
@@ -19,8 +23,11 @@ export const settingsSlice = createSlice({
     update: (state, action: PayloadAction<SettingsState>) => {
       return action.payload
     },
+    reset: () => {
+      return initialState
+    }
   }
 })
 
-export const { update } = settingsSlice.actions;
+export const { update, reset } = settingsSlice.actions;
 export default settingsSlice.reducer;

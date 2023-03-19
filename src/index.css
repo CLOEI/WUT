@@ -14,4 +14,10 @@ body {
   .menu-button {
     @apply bg-secondary p-4 rounded-md enabled:active:scale-90 disabled:opacity-50
   }
+  .high-text {
+    @apply opacity-[87%];
+  }
+  .medium-text {
+    @apply opacity-[60%]
+  }
 }

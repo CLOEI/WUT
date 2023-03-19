@@ -1,5 +1,6 @@
-import React from 'react'
+import { RootState } from '@/redux/store';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 type FormData = {
   type: string;
@@ -10,12 +11,14 @@ type FormData = {
 
 function Index() {
   const { handleSubmit, register } = useForm();
+  const defaultClient = useSelector((state: RootState) => state.client.defaultClient);
 
+  // NOTE : This is just for testing purposes do not use it
   const onSubmit = async ({ media, message, numbers, type}: FormData) => {
     const num = numbers.split("\n");
 
     for (let i = 0; i < num.length; i++) {
-      await api.sendMessage("", message, num[i].replace(/\D/g, "")+"@s.whatsapp.net", media[0]?.path)
+      await api.sendMessage(defaultClient, message, num[i].replace(/\D/g, "")+"@s.whatsapp.net", media[0]?.path)
     }
   };
 

@@ -13,10 +13,19 @@ const config: ForgeConfig = {
     ignore: [
       new RegExp('/(jimp|qrcode-terminal|utf-8-validate|pino-pretty|bufferutil|@adiwajshing/keyed-db)/')
     ],
-    asar: true
+    icon: "./assets/icon",
+    asar: {
+      unpackDir: "node_modules/ffmpeg-static"
+    },
   },
   rebuildConfig: {},
-  makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+  makers: [new MakerSquirrel({
+    setupIcon: "./assets/icon.ico"
+  }), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({
+    options: {
+      icon: "./assets/icon.png",
+    }
+  })],
   plugins: [
     new WebpackPlugin({
       mainConfig,
