@@ -4,6 +4,7 @@ export type SettingsState = {
   minDelay: number;
   maxDelay: number;
   sleepAfter: number;
+  sleepTimeout: number;
   enableSleep: boolean;
   enableBTG: boolean;
 };
@@ -12,6 +13,7 @@ const initialState: SettingsState = {
   minDelay: 0,
   maxDelay: 0,
   sleepAfter: 0,
+  sleepTimeout: 0,
   enableSleep: false,
   enableBTG: false,
 };

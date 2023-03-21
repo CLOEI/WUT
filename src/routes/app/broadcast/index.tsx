@@ -48,7 +48,7 @@ function Index() {
      </div>
      <div className='mt-4'>
       <h2 className='font-bold text-xl mb-1'>Numbers</h2>
-      <textarea className='resize-none w-full h-24 bg-secondary outline-none p-2 mb-1' {...register("numbers")}/>
+      <textarea className='resize-none w-full h-24 bg-secondary outline-none p-2' {...register("numbers")}/>
      </div>
     </form>
   )

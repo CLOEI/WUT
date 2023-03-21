@@ -40,6 +40,11 @@ function Index() {
               <input type="number" id="sleep-after" className='bg-secondary text-center outline-none align-middle' min={0} defaultValue={settings.sleepAfter} {...register("sleepAfter")}/>
               <span> message</span>
             </div>
+            <div>
+              <label htmlFor="sleep-timeout">Sleep timeout : </label>
+              <input type="number" id="sleep-timeout" className='bg-secondary text-center outline-none align-middle' min={0} defaultValue={settings.sleepTimeout} {...register("sleepTimeout")}/>
+              <span> ms</span>
+            </div>
           </div>
         </div>
         <div>

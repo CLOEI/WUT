@@ -23,7 +23,7 @@ function Main() {
         <button onClick={gotoFilter} className='menu-button'>
           <AiOutlineFilter />
         </button>
-        <button onClick={gotoBC} className='menu-button'>
+        <button onClick={gotoBC} className='menu-button' disabled>
           <BsBroadcast />
         </button>
         <button onClick={gotoSettings} className='menu-button'>
