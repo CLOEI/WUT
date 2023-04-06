@@ -1,9 +1,10 @@
 import { RootState } from "@/redux/store";
 import { useState } from "react"
 import { useSelector } from "react-redux";
+import toast from "react-hot-toast"
 
 function Index() {
-  const client = useSelector((state: RootState) => state.client.defaultClient)
+  const client = useSelector((state: RootState) => state.client)
   const [loading, setLoading] = useState(false)
   const [numbers, setNumbers] = useState([])
   const [filtered, setFiltered] = useState({
@@ -19,7 +20,8 @@ function Index() {
   const checkNumbers = async () => {
     if (numbers.length > 0) {
       setLoading(true)
-      const checked = await api.checkOnWhatsApp(client, numbers)
+      const toastId = toast.loading("Filtering...")
+      const checked = await api.checkOnWhatsApp(client.defaultClient, numbers)
 
       const valid = [], invalid = [];
 
@@ -33,7 +35,17 @@ function Index() {
         invalid
       })
       setLoading(false)
+      toast.success(`${valid.length} valid | ${invalid.length} invalid`, { id: toastId })
     }
+  }
+
+  const removeDuplicates = () => {
+    const newData = [...new Set(filtered.valid)];
+    toast.success(`Removed ${filtered.valid.length - newData.length} duplicate`)
+    setFiltered((state) => ({
+      ...state,
+      valid: newData
+    }))
   }
 
   return (
@@ -43,9 +55,8 @@ function Index() {
         <textarea onChange={onChange} className="resize-none flex-grow bg-secondary outline-none cus-scrollbar"/>
       </div>
       <div className="mx-4 space-y-2">
-        <button onClick={checkNumbers} disabled={loading || !client} className="bg-secondary px-4 py-2 rounded-md enabled:active:scale-90 block w-full disabled:opacity-50">Check</button>
-        <button className="bg-secondary px-4 py-2 rounded-md enabled:active:scale-90 block w-full opacity-50" disabled>Copy valid</button>
-        <button className="bg-secondary px-4 py-2 rounded-md enabled:active:scale-90 block w-full opacity-50" disabled>Copy invalid</button>
+        <button onClick={checkNumbers} disabled={loading || !(client.defaultClient && client.clients[client.defaultClient].conStatus == "open")} className="bg-secondary px-4 py-2 rounded-md enabled:active:scale-90 block w-full disabled:opacity-50">Check</button>
+        <button onClick={removeDuplicates} disabled={filtered.valid.length === 0} className="bg-secondary px-4 py-2 rounded-md enabled:active:scale-90 block w-full disabled:opacity-50">Remove Duplicate</button>
       </div>
       <div className="h-full flex flex-col mr-2">
         <p>Valid : {filtered.valid.length}</p>

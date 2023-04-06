@@ -4,7 +4,7 @@ import { Outlet, useNavigate } from 'react-router-dom'
 function Index() {
   const navigate = useNavigate();
 
-  const goBack = () => navigate(-1);
+  const goBack = () => navigate("/");
 
   return (
     <div className='p-2 h-screen flex flex-col'>

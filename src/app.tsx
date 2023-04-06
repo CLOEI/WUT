@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { createHashRouter, RouterProvider } from "react-router-dom"
+import toast, { Toaster } from "react-hot-toast"
 
 import Main from "./routes/main"
 import Layout from "./routes/app"
@@ -26,6 +27,7 @@ api.onConnection((data: TClient) => {
 
 api.onRemoved((name: string) => {
   store.dispatch(remClient(name))
+  toast.success(`${name} Client removed`)
 })
 
 store.subscribe(() => {
@@ -80,6 +82,9 @@ const root = createRoot(document.getElementById("root"));
 
 root.render(
   <Provider store={store}>
+    <Toaster position="bottom-right" toastOptions={{
+      className: "bg-secondary text-white"
+    }}/>
     <RouterProvider router={router}/>
   </Provider>
 );
