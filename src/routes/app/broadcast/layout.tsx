@@ -10,7 +10,7 @@ function Layout() {
   const navigate = useNavigate()
 
   return (
-    <div className='grid grid-cols-[250px_1fr] h-[calc(100vh-64px)]'>
+    <div className='grid grid-cols-[250px_1fr] h-[calc(100vh-64px)] px-2'>
       <div className='h-full bg-secondary'>
         {Object.values(clients).map((client, i) => {
           const onClick = (path: string) => !(path === `/app/broadcast/${client.name}`) && navigate(`/app/broadcast/${client.name}`)

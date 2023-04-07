@@ -20,7 +20,6 @@ class Socket {
   constructor(e: Electron.WebContents) {
     this.wc = e;
   }
-
   async newClient(name: string) {
     const { state, saveCreds } = await useMultiFileAuthState(path.join(app.getPath("userData"), "sessions", name))
     const sock = makeWASocket({
@@ -32,7 +31,7 @@ class Socket {
     sock.ev.on("connection.update", async (update) => {
       const { connection, lastDisconnect } = update
 
-      this.wc.send("connection", {
+      this.wc.send("sock:connection", {
         name,
         qr: update.qr,
         conStatus: connection,
@@ -44,17 +43,15 @@ class Socket {
           if(status !== DisconnectReason.loggedOut) {
             this.newClient(name) 
           } else {
-            this.wc.send("client-removed", name)
+            this.wc.send("sock:client-removed", name)
             await fs.rm(path.join(app.getPath("userData"), "sessions", name), { recursive: true, force: true })
           }
-      } else if(connection === 'open') {
-        Socket.clients[name] = sock
       }
+      Socket.clients[name] = sock
     })
 
     sock.ev.on('creds.update', saveCreds)
   }
-
   async getProfileUrl(name: string, id: string) {
     const sock = Socket.clients[name]
     return await sock.profilePictureUrl(jidNormalizedUser(id))
@@ -73,12 +70,10 @@ class Socket {
       })
     }))
   }
-
   async logout(name: string) {
     const sock = Socket.clients[name]
     return await sock.logout()
   }
-
   async sendMessage(name: string, message: string, to: string, media?: string) {
     const sock = Socket.clients[name]
 
@@ -91,6 +86,18 @@ class Socket {
     } else {
       await sock.sendMessage(to, { text: message })
     }
+  }
+  async getGroups(name: string) {
+    const sock = Socket.clients[name]
+    return await sock.groupFetchAllParticipating()
+  }
+  async getGroup(name: string, id: string){
+    const sock = Socket.clients[name]
+    return await sock.groupMetadata(id)
+  }
+  async leaveGroup(name: string, id: string) {
+    const sock = Socket.clients[name]
+    return await sock.groupLeave(id)
   }
 }
 

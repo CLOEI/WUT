@@ -47,22 +47,33 @@ const createWindow = (): void => {
       }
     })
 
-  ipcMain.handle("create-client", (_, name) => {
+  ipcMain.handle("sock:create-client", (_, name) => {
     sock.newClient(name)
   })
-  ipcMain.handle("logout-client", async (_, name) => {
+  ipcMain.handle("sock:logout-client", async (_, name) => {
     await sock.logout(name)
     await fs.rm(path.join(app.getPath("userData"), "sessions", name), { recursive: true, force: true } )
   })
-  ipcMain.handle("get-profileUrl", async (_, name, id) => {
+  ipcMain.handle("sock:get-profileUrl", async (_, name, id) => {
     const url = await sock.getProfileUrl(name, id)
     return url;
   })
-  ipcMain.handle("check-numbers", async (_, name, numbers) => {
+  ipcMain.handle("sock:get-groups", async (_, name) => {
+    const metadata = await sock.getGroups(name)
+    return metadata;
+  })
+  ipcMain.handle("sock:get-group", async (_, name, id) => {
+    const metadata = await sock.getGroup(name, id)
+    return metadata;
+  })
+  ipcMain.handle("sock:leave-group", async (_, name, id) => {
+    await sock.leaveGroup(name, id)
+  })
+  ipcMain.handle("sock:check-numbers", async (_, name, numbers) => {
     const checked = await sock.checkOnWhatsApp(name, numbers)
     return checked;
   })
-  ipcMain.handle("send-message", async (_, name, message, to, media) => {
+  ipcMain.handle("sock:send-message", async (_, name, message, to, media) => {
     await sock.sendMessage(name, message, to, media)
   })
   

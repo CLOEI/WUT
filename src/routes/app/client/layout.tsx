@@ -20,7 +20,7 @@ function Layout() {
   }
 
   return (
-    <div className='grid grid-cols-[250px_1fr] h-full'>
+    <div className='grid grid-cols-[250px_1fr] h-full px-2'>
       <div className='h-full bg-secondary'>
         <div className='py-2 h-[calc(100vh-104px)] overflow-y-auto cus-scrollbar'>
           {Object.values(clients).map((client, i) => {

@@ -19,7 +19,7 @@ function Index() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className='px-2'>
       <h1 className='text-3xl font-bold mb-6'>Settings</h1>
       <div className='space-y-1 grid grid-cols-2'>
         <div>

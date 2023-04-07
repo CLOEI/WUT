@@ -29,6 +29,7 @@ const config: ForgeConfig = {
   plugins: [
     new WebpackPlugin({
       mainConfig,
+      devContentSecurityPolicy: "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval'; img-src 'self' https://pps.whatsapp.net",
       renderer: {
         config: rendererConfig,
         entryPoints: [

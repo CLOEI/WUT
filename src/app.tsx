@@ -13,6 +13,9 @@ import BroadcastLayout from "./routes/app/broadcast/layout"
 import Broadcast from "./routes/app/broadcast/client"
 import BroadcastIndex from "./routes/app/broadcast"
 import Settings from "./routes/app/settings"
+import GroupLayout from './routes/app/group/layout'
+import Group from './routes/app/group/group'
+import GroupIndex from './routes/app/group/'
 
 import { store } from "../redux/store"
 import { Client as TClient, remClient, setDefault, upCon } from "@/redux/slices/clientSlice";
@@ -52,6 +55,17 @@ const router = createHashRouter([
           {
             path: ":id",
             element: <Client/>
+          }
+        ]
+      },
+      {
+        path: "group",
+        element: <GroupLayout/>,
+        children: [
+          { index: true, element: <GroupIndex/> },
+          {
+            path: ":id",
+            element: <Group/>
           }
         ]
       },
